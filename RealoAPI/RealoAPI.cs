@@ -1,8 +1,4 @@
-﻿using RestSharp;
-using System;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System;
 
 namespace RealoAPI {
 
@@ -19,11 +15,9 @@ namespace RealoAPI {
             }
         }
 
-        private RestClient RestClient { get; set; }
-
-        private string PublicKey { get; set; }
-        private string PrivateKey { get; set; }
         private bool Sandbox { get; set; }
+
+        private RealoRestClient RestClient { get; set; }
 
         /// <summary>
         /// Creates a client of the Realo API.
@@ -34,38 +28,10 @@ namespace RealoAPI {
         /// <param name="privateKey">Your private authorization key</param>
         /// <param name="useSandbox">If you need to test, enable this so your rate limit stays the same</param>
         public RealoAPI(string publicKey, string privateKey, bool useSandbox = false) {
-            if (string.IsNullOrWhiteSpace(publicKey) || string.IsNullOrWhiteSpace(privateKey)) {
-                throw new ArgumentException("The public and private keys cannot be null or empty!");
-            }
-
-            PublicKey = publicKey;
-            PrivateKey = privateKey;
             Sandbox = useSandbox;
-            RestClient = new RestClient(URL);
+            RestClient = new RealoRestClient(publicKey, privateKey, URL);
         }
 
-        /// <summary>
-        /// Calculates the signature to send with the authorization
-        /// token to verify it is the right request. (Required by Realo)
-        /// </summary>
-        /// <param name="method">The method we are doing (GET, POST, PUT & DELETE)</param>
-        /// <param name="url">The URL we are requesting to</param>
-        /// <param name="body">Any body we send with our request</param>
-        /// <returns>A signature in string form</returns>
-        private string CalculateSignature(string method, string url, string body) {
-            string baseString = $"{method}&{url}&{body}";
-
-            ASCIIEncoding encoding = new ASCIIEncoding();
-
-            Byte[] textBytes = encoding.GetBytes(baseString);
-            Byte[] keyBytes = encoding.GetBytes(PrivateKey);
-            Byte[] hashBytes;
-
-            using (HMACSHA256 hash = new HMACSHA256(keyBytes))
-                hashBytes = hash.ComputeHash(textBytes);
-
-            return Convert.ToBase64String(hashBytes);
-        }
     }
 
 }
