@@ -225,6 +225,47 @@ namespace RealoAPI.Models {
         /// A list of additional properties of this estate. The true/false value indicates if a flag is available or not available.
         /// </summary>
         public IDictionary<string, bool> Flags { get; set; }
+
+        /// <summary>
+        /// List of pictures.
+        /// </summary>
+        public List<Picture> Pictures { get; private set; }
+
+        /// <summary>
+        /// List of virtual tours.
+        /// </summary>
+        public List<VirtualTour> VirtualTours { get; set; }
+
+        /// <summary>
+        /// List of Realo urls by language.
+        /// </summary>
+        public IDictionary<Language, string> CanonicalUrls { get; private set; }
+
+        /// <summary>
+        /// Original agency website url of the listing or a list of agency urls by language code.
+        /// </summary>
+        public IDictionary<Language, string> AgencyUrl { get; set; }
+
+        /// <summary>
+        /// A reference to the original listing of the agency.
+        /// </summary>
+        public int? AgencyReference { get; set; }
+
+        /// <summary>
+        /// Additional non-public metadata attached to this listing.
+        /// </summary>
+        public IDictionary<string, object> Metadata { get; set; }
+
+        /// <summary>
+        /// Your unique identifier - Realo will throw an error when this value is already found for your account (maximum length 32 chars).
+        /// </summary>
+        public int? SourceId { get; set; }
+
+        /// <summary>
+        /// The main listingId of the project the listing belongs to.
+        /// </summary>
+        public int? ProjectId { get; set; }
+
     }
 
 }
