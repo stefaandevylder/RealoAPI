@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RestSharp;
+using System;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,6 +8,9 @@ namespace RealoAPI {
 
     public class RealoAPI {
 
+        /// <summary>
+        /// The URL we use to connect to the Realo API.
+        /// </summary>
         private string URL {
             get {
                 return Sandbox ?
@@ -13,6 +18,8 @@ namespace RealoAPI {
                     "https://api.realo.com/1.0/";
             }
         }
+
+        private RestClient RestClient { get; set; }
 
         private string PublicKey { get; set; }
         private string PrivateKey { get; set; }
@@ -34,6 +41,7 @@ namespace RealoAPI {
             PublicKey = publicKey;
             PrivateKey = privateKey;
             Sandbox = useSandbox;
+            RestClient = new RestClient(URL);
         }
 
         /// <summary>
