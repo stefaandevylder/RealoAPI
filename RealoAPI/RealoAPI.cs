@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RealoAPI.Models;
+using System;
 
 namespace RealoAPI {
 
@@ -17,7 +19,7 @@ namespace RealoAPI {
 
         private bool Sandbox { get; set; }
 
-        private RealoRestClient RestClient { get; set; }
+        private RealoRestClient Client { get; set; }
 
         /// <summary>
         /// Creates a client of the Realo API.
@@ -29,9 +31,26 @@ namespace RealoAPI {
         /// <param name="useSandbox">If you need to test, enable this so your rate limit stays the same</param>
         public RealoAPI(string publicKey, string privateKey, bool useSandbox = false) {
             Sandbox = useSandbox;
-            RestClient = new RealoRestClient(publicKey, privateKey, URL);
+            Client = new RealoRestClient(publicKey, privateKey, URL);
         }
 
+        /// <summary>
+        /// GET: /agencies/{agency}/listings
+        /// </summary>
+        /// <param name="agency">ID of the parent agency</param>
+        /// <returns>An array of all listings</returns>
+        public Listing[] GetAllListings(int agency) {
+            return JsonConvert.DeserializeObject<Listing[]>(Client.Get($"/agencies/{agency}/listings").Content);
+        }
+
+        /// <summary>
+        /// POST /agencies/{agency}/listings
+        /// </summary>
+        /// <param name="agency"></param>
+        /// <returns>True if code 200</returns>
+        public bool PostNewListing(int agency) {
+            return Client.Post($"/agencies/{agency}/listings").IsSuccessful;
+        }
     }
 
 }

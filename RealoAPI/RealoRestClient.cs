@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using RealoAPI.Models;
+using RestSharp;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,7 +8,7 @@ namespace RealoAPI {
 
     class RealoRestClient {
 
-        private RestClient RestClient { get; set; }
+        private RestClient Client { get; set; }
 
         private string Url { get; set; }
         private string PublicKey { get; set; }
@@ -23,7 +24,7 @@ namespace RealoAPI {
                 throw new ArgumentException("The public key, private key and url cannot be null or empty!");
             }
 
-            RestClient = new RestClient(url);
+            Client = new RestClient(url);
 
             Url = url;
             PublicKey = publicKey;
@@ -31,17 +32,56 @@ namespace RealoAPI {
         }
 
         /// <summary>
-        /// Creates a request we can use.
+        /// Do a GET request.
+        /// </summary>
+        /// <param name="resource">The resource URL</param>
+        /// <returns>An IRestResponse with all information</returns>
+        public IRestResponse Get(string resource) {
+            return Client.Get(CreateRequest(RequestMethod.GET, resource));
+        }
+
+        /// <summary>
+        /// Do a POST request.
+        /// </summary>
+        /// <param name="resource">The resource URL</param>
+        /// <returns>An IRestResponse with all information</returns>
+        public IRestResponse Post(string resource) {
+            return Client.Post(CreateRequest(RequestMethod.POST, resource));
+        }
+
+        /// <summary>
+        /// Do PUT request.
+        /// </summary>
+        /// <param name="resource">The resource URL</param>
+        /// <returns>An IRestResponse with all information</returns>
+        public IRestResponse Put(string resource) {
+            return Client.Get(CreateRequest(RequestMethod.PUT, resource));
+        }
+
+        /// <summary>
+        /// Do a DELETE request.
+        /// </summary>
+        /// <param name="resource">The resource URL</param>
+        /// <returns>An IRestResponse with all information</returns>
+        public IRestResponse Delete(string resource) {
+            return Client.Get(CreateRequest(RequestMethod.DELETE, resource));
+        }
+
+        /// <summary>
+        /// Creates a new request we can use.
+        /// Adds the correct headers and authorization.
         /// </summary>
         /// <param name="requestMethod">The request method we are doing</param>
-        /// <param name="requestUrl">The request sub-url</param>
+        /// <param name="resource">The request sub-url</param>
         /// <returns>A RestRequest object with the correct authorization header</returns>
-        private RestRequest CreateRequest(RequestMethod requestMethod, string requestUrl) {
-            RestRequest request = new RestRequest(requestUrl);
+        private RestRequest CreateRequest(RequestMethod requestMethod, string resource) {
+            RestRequest request = new RestRequest(resource);
 
+            request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
+            request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", 
                 $"Realo key=\"{ PublicKey }\", " +
-                $"signature=\"{ CreateSignature(requestMethod.ToString(), $"{Url}/{requestUrl}", request.Body.Value.ToString()) }\" " +
+                $"signature=\"{ CreateSignature(requestMethod.ToString(), $"{Url}/{resource}", request.Body.Value.ToString()) }\" " +
                 $"version=\"1.0\"");
 
             return request;
