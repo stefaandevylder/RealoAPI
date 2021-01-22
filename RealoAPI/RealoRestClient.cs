@@ -1,5 +1,4 @@
-﻿using RealoAPI.Models;
-using RestSharp;
+﻿using RestSharp;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -82,7 +81,7 @@ namespace RealoAPI {
         private RestRequest CreateRequest(RequestMethod requestMethod, RestRequest request) {
             request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
             request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", 
+            request.AddHeader("Authorization",
                 $"Realo key=\"{ PublicKey }\", " +
                 $"signature=\"{ CreateSignature(requestMethod.ToString(), $"{Url}/{request.Resource}", request.Body.Value.ToString()) }\" " +
                 $"version=\"1.0\"");

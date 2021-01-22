@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealoAPI", "RealoAPI\RealoAPI.csproj", "{D62A7048-B7D8-4E57-83FC-04979B76D6F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealoAPI", "RealoAPI\RealoAPI.csproj", "{D62A7048-B7D8-4E57-83FC-04979B76D6F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealoAPI.Tests", "RealoAPI.Tests\RealoAPI.Tests.csproj", "{951912DD-8E8A-4E05-B21A-99FF9FDF87EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D62A7048-B7D8-4E57-83FC-04979B76D6F0} = {D62A7048-B7D8-4E57-83FC-04979B76D6F0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{D62A7048-B7D8-4E57-83FC-04979B76D6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D62A7048-B7D8-4E57-83FC-04979B76D6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D62A7048-B7D8-4E57-83FC-04979B76D6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{951912DD-8E8A-4E05-B21A-99FF9FDF87EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{951912DD-8E8A-4E05-B21A-99FF9FDF87EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{951912DD-8E8A-4E05-B21A-99FF9FDF87EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{951912DD-8E8A-4E05-B21A-99FF9FDF87EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

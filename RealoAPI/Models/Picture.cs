@@ -27,6 +27,14 @@
         /// </summary>
         public int? Order { get; set; }
 
+        /// <summary>
+        /// Create a new picture object.
+        /// </summary>
+        /// <param name="url">Picture url.</param>
+        public Picture(string url) {
+            Url = url;
+        }
+
     }
 
 }

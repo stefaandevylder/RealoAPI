@@ -88,6 +88,24 @@
         /// </summary>
         public string AvatarUrl { get; set; }
 
+        /// <summary>
+        /// Create a new agency.
+        /// </summary>
+        /// <param name="address">Agency address.</param>
+        /// <param name="name">Name of the agency.</param>
+        /// <param name="telephone">Telephone number of the agency.</param>
+        /// <param name="email">Email address of the agency.</param>
+        /// <param name="websiteUrl">Website URL of the agency.</param>
+        /// <param name="language">Language of the agency.</param>
+        public Agency(Address address, string name, string telephone, string email, string websiteUrl, string language) {
+            Address = address;
+            Name = name;
+            Telephone = telephone;
+            Email = email;
+            WebsiteUrl = websiteUrl;
+            Language = language;
+        }
+
     }
 
 }

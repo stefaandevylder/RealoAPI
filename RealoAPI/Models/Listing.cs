@@ -266,6 +266,16 @@ namespace RealoAPI.Models {
         /// </summary>
         public int? ProjectId { get; set; }
 
+        /// <summary>
+        /// Create a new listing.
+        /// </summary>
+        /// <param name="type">Property type.</param>
+        /// <param name="way">Listing type.</param>
+        public Listing(ListingType type, ListingWay way) {
+            Type = type;
+            Way = way;
+        }
+
     }
 
 }

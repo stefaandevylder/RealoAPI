@@ -72,6 +72,14 @@
         /// </summary>
         public AdressType? CoordinatesAccuracy { get; set; }
 
+        /// <summary>
+        /// Create a new address.
+        /// </summary>
+        /// <param name="country">Country ISO 3166-2 code.</param>
+        public Address(Country country) {
+            CountryISO = country;
+        }
+
     }
 
 }
