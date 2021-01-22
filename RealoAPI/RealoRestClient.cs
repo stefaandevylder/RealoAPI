@@ -37,25 +37,31 @@ namespace RealoAPI {
         /// <param name="resource">The resource URL</param>
         /// <returns>An IRestResponse with all information</returns>
         public IRestResponse Get(string resource) {
-            return Client.Get(CreateRequest(RequestMethod.GET, resource));
+            return Client.Get(CreateRequest(RequestMethod.GET, new RestRequest(resource)));
         }
 
         /// <summary>
         /// Do a POST request.
         /// </summary>
+        /// <param name="obj">The object to post</param>
         /// <param name="resource">The resource URL</param>
         /// <returns>An IRestResponse with all information</returns>
-        public IRestResponse Post(string resource) {
-            return Client.Post(CreateRequest(RequestMethod.POST, resource));
+        public IRestResponse Post(object obj, string resource) {
+            RestRequest req = new RestRequest(resource);
+            req.AddJsonBody(obj);
+            return Client.Post(CreateRequest(RequestMethod.POST, req));
         }
 
         /// <summary>
         /// Do PUT request.
         /// </summary>
+        /// <param name="obj">The object to put</param>
         /// <param name="resource">The resource URL</param>
         /// <returns>An IRestResponse with all information</returns>
-        public IRestResponse Put(string resource) {
-            return Client.Get(CreateRequest(RequestMethod.PUT, resource));
+        public IRestResponse Put(object obj, string resource) {
+            RestRequest req = new RestRequest(resource);
+            req.AddJsonBody(obj);
+            return Client.Post(CreateRequest(RequestMethod.PUT, req));
         }
 
         /// <summary>
@@ -64,24 +70,21 @@ namespace RealoAPI {
         /// <param name="resource">The resource URL</param>
         /// <returns>An IRestResponse with all information</returns>
         public IRestResponse Delete(string resource) {
-            return Client.Get(CreateRequest(RequestMethod.DELETE, resource));
+            return Client.Get(CreateRequest(RequestMethod.DELETE, new RestRequest(resource)));
         }
 
         /// <summary>
-        /// Creates a new request we can use.
         /// Adds the correct headers and authorization.
         /// </summary>
         /// <param name="requestMethod">The request method we are doing</param>
-        /// <param name="resource">The request sub-url</param>
+        /// <param name="request">The request object</param>
         /// <returns>A RestRequest object with the correct authorization header</returns>
-        private RestRequest CreateRequest(RequestMethod requestMethod, string resource) {
-            RestRequest request = new RestRequest(resource);
-
+        private RestRequest CreateRequest(RequestMethod requestMethod, RestRequest request) {
             request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", 
                 $"Realo key=\"{ PublicKey }\", " +
-                $"signature=\"{ CreateSignature(requestMethod.ToString(), $"{Url}/{resource}", request.Body.Value.ToString()) }\" " +
+                $"signature=\"{ CreateSignature(requestMethod.ToString(), $"{Url}/{request.Resource}", request.Body.Value.ToString()) }\" " +
                 $"version=\"1.0\"");
 
             return request;

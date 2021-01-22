@@ -46,10 +46,11 @@ namespace RealoAPI {
         /// <summary>
         /// POST /agencies/{agency}/listings
         /// </summary>
-        /// <param name="agency"></param>
+        /// <param name="listing">The listing to post</param>
+        /// <param name="agency">The agency we post the listing in</param>
         /// <returns>True if code 200</returns>
-        public bool PostNewListing(int agency) {
-            return Client.Post($"/agencies/{agency}/listings").IsSuccessful;
+        public bool PostNewListing(Listing listing, int agency) {
+            return Client.Post(listing, $"/agencies/{agency}/listings").IsSuccessful;
         }
     }
 
