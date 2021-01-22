@@ -83,7 +83,7 @@ namespace RealoAPI {
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization",
                 $"Realo key=\"{ PublicKey }\", " +
-                $"signature=\"{ CreateSignature(requestMethod.ToString(), $"{Url}/{request.Resource}", request.Body.Value.ToString()) }\" " +
+                $"signature=\"{ CreateSignature(requestMethod.ToString(), $"{Url}/{request.Resource}", request.Body != null ? request.Body.Value.ToString() : "") }\" " +
                 $"version=\"1.0\"");
 
             return request;
