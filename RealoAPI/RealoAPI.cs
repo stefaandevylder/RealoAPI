@@ -54,9 +54,10 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="listing">The listing to post</param>
         /// <param name="agency">The agency we post the listing in</param>
-        /// <returns>True if code 200</returns>
-        public bool PostNewListing(Listing listing, int agency) {
-            return Client.Post(listing, $"/agencies/{agency}/listings").IsSuccessful;
+        /// <returns>The ID of the posted listing</returns>
+        public int PostNewListing(Listing listing, int agency) {
+            var definition = new { Data = new { Id = 0 } };
+            return JsonConvert.DeserializeAnonymousType(Client.Post(listing, $"/agencies/{agency}/listings").Content, definition).Data.Id;
         }
 
         /// <summary>
@@ -79,9 +80,10 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="listing">The listing to put</param>
         /// <param name="listingId">ID of the listing</param>
-        /// <returns>True if code 200</returns>
+        /// <returns>True if succeeded</returns>
         public bool PutNewListing(Listing listing, int listingId) {
-            return Client.Put(listing, $"/listings/{listingId}").IsSuccessful;
+            var definition = new { Success = false };
+            return JsonConvert.DeserializeAnonymousType(Client.Put(listing, $"/listings/{listingId}").Content, definition).Success;
         }
 
         /// <summary>
@@ -92,9 +94,10 @@ namespace RealoAPI {
         /// DELETE /listings/{id}
         /// </summary>
         /// <param name="listingId">ID of the listing</param>
-        /// <returns>True if code 200</returns>
+        /// <returns>True if succeeded</returns>
         public bool DeleteNewListing(int listingId) {
-            return Client.Delete($"/listings/{listingId}").IsSuccessful;
+            var definition = new { Success = false };
+            return JsonConvert.DeserializeAnonymousType(Client.Delete($"/listings/{listingId}").Content, definition).Success;
         }
 
         /// <summary>
@@ -104,9 +107,10 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="pictures">The pictures to post</param>
         /// <param name="listingId">ID of the listing</param>
-        /// <returns>True if code 200</returns>
-        public bool PostPicture(Picture[] pictures, int listingId) {
-            return Client.Post(pictures, $"/listings/{listingId}/pictures").IsSuccessful;
+        /// <returns>The id of the new picture</returns>
+        public int PostPicture(Picture[] pictures, int listingId) {
+            var definition = new { Data = new { Id = 0 } };
+            return JsonConvert.DeserializeAnonymousType(Client.Post(pictures, $"/listings/{listingId}/pictures").Content, definition).Data.Id;
         }
 
         /// <summary>
@@ -116,9 +120,10 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="pictureId">The picture to move</param>
         /// <param name="listingId">ID of the listing</param>
-        /// <returns>True if code 200</returns>
+        /// <returns>True if succeeded</returns>
         public bool PutPicture(int pictureId, int listingId) {
-            return Client.Put(pictureId, $"/listings/{listingId}/pictures/{pictureId}").IsSuccessful;
+            var definition = new { Success = false };
+            return JsonConvert.DeserializeAnonymousType(Client.Put(pictureId, $"/listings/{listingId}/pictures/{pictureId}").Content, definition).Success;
         }
 
         /// <summary>
@@ -128,9 +133,10 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="pictureId">The picture to move</param>
         /// <param name="listingId">ID of the listing</param>
-        /// <returns>True if code 200</returns>
+        /// <returns>True if succeeded</returns>
         public bool DeletePicture(int pictureId, int listingId) {
-            return Client.Delete($"/listings/{listingId}/pictures/{pictureId}").IsSuccessful;
+            var definition = new { Success = false };
+            return JsonConvert.DeserializeAnonymousType(Client.Delete($"/listings/{listingId}/pictures/{pictureId}").Content, definition).Success;
         }
 
         /// <summary>
@@ -139,9 +145,10 @@ namespace RealoAPI {
         /// GET /listings/{id}/publish
         /// </summary>
         /// <param name="listingId">ID of the listing</param>
-        /// <returns>True if code 200</returns>
+        /// <returns>True if succeeded</returns>
         public bool PublishListing(int listingId) {
-            return Client.Get($"/listings/{listingId}/publish").IsSuccessful;
+            var definition = new { Success = false };
+            return JsonConvert.DeserializeAnonymousType(Client.Get($"/listings/{listingId}/publish").Content, definition).Success;
         }
     }
 
