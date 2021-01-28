@@ -3,7 +3,7 @@ using RealoAPI.Models;
 
 namespace RealoAPI {
 
-    public class RealoAPI {
+    public class RealoClient {
 
         /// <summary>
         /// The URL we use to connect to the Realo API.
@@ -18,7 +18,7 @@ namespace RealoAPI {
 
         private bool Sandbox { get; set; }
 
-        private RealoRestClient Client { get; set; }
+        public Listings Listings { get; private set; }
 
         /// <summary>
         /// Creates a client of the Realo API.
@@ -28,9 +28,21 @@ namespace RealoAPI {
         /// <param name="publicKey">Your public authorization key</param>
         /// <param name="privateKey">Your private authorization key</param>
         /// <param name="useSandbox">If you need to test, enable this so your rate limit stays the same</param>
-        public RealoAPI(string publicKey, string privateKey, bool useSandbox = false) {
+        public RealoClient(string publicKey, string privateKey, bool useSandbox = false) {
             Sandbox = useSandbox;
-            Client = new RealoRestClient(publicKey, privateKey, URL);
+
+            RealoRestClient client = new RealoRestClient(publicKey, privateKey, URL);
+            Listings = new Listings(client);
+        }
+
+    }
+
+    public class Listings {
+
+        private RealoRestClient Client { get; set; }
+
+        public Listings(RealoRestClient client) {
+            Client = client;
         }
 
         /// <summary>
@@ -40,7 +52,7 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="agency">ID of the parent agency</param>
         /// <returns>An array of all listings</returns>
-        public Listing[] GetAllListings(int agency) {
+        public Listing[] GetAll(int agency) {
             return JsonConvert.DeserializeObject<Listing[]>(Client.Get($"/agencies/{agency}/listings").Content);
         }
 
@@ -55,7 +67,7 @@ namespace RealoAPI {
         /// <param name="listing">The listing to post</param>
         /// <param name="agency">The agency we post the listing in</param>
         /// <returns>The ID of the posted listing</returns>
-        public int PostNewListing(Listing listing, int agency) {
+        public int Add(Listing listing, int agency) {
             var definition = new { Data = new { Id = 0 } };
             return JsonConvert.DeserializeAnonymousType(Client.Post(listing, $"/agencies/{agency}/listings").Content, definition).Data.Id;
         }
@@ -67,7 +79,7 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="listingId">ID of the listing</param>
         /// <returns>One listing</returns>
-        public Listing GetListing(int listingId) {
+        public Listing Get(int listingId) {
             return JsonConvert.DeserializeObject<Listing>(Client.Get($"/listings/{listingId}").Content);
         }
 
@@ -81,7 +93,7 @@ namespace RealoAPI {
         /// <param name="listing">The listing to put</param>
         /// <param name="listingId">ID of the listing</param>
         /// <returns>True if succeeded</returns>
-        public bool PutNewListing(Listing listing, int listingId) {
+        public bool Update(Listing listing, int listingId) {
             var definition = new { Success = false };
             return JsonConvert.DeserializeAnonymousType(Client.Put(listing, $"/listings/{listingId}").Content, definition).Success;
         }
@@ -95,7 +107,7 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="listingId">ID of the listing</param>
         /// <returns>True if succeeded</returns>
-        public bool DeleteNewListing(int listingId) {
+        public bool Delete(int listingId) {
             var definition = new { Success = false };
             return JsonConvert.DeserializeAnonymousType(Client.Delete($"/listings/{listingId}").Content, definition).Success;
         }
@@ -146,7 +158,7 @@ namespace RealoAPI {
         /// </summary>
         /// <param name="listingId">ID of the listing</param>
         /// <returns>True if succeeded</returns>
-        public bool PublishListing(int listingId) {
+        public bool Publish(int listingId) {
             var definition = new { Success = false };
             return JsonConvert.DeserializeAnonymousType(Client.Get($"/listings/{listingId}/publish").Content, definition).Success;
         }

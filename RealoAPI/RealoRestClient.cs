@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RealoAPI {
 
-    class RealoRestClient {
+    public class RealoRestClient {
 
         private RestClient Client { get; set; }
 

@@ -36,15 +36,15 @@ Official documentation can be found on the [Realo](https://api.realo.com/docs) A
 ## Examples
 ### Basic Example
 ```cs
-RealoAPI realoApi = new RealoAPI("private_key", "public_key");
+RealoClient client = new RealoClient("private_key", "public_key");
 
 int agencyId = 1;
 Listing listing = new Listing(ListingType.APARTMENT, ListingWay.SALE);
 
 //Post the listing
-int listingId = realoApi.PostNewListing(listing, agencyId);
+int listingId = client.Listings.Add(listing, agencyId);
 
 //Publish the new listing
-realoApi.PublishListing(listingId);
+client.Listings.Publish(listingId);
 ```
 This only contains the most basic options, there are a lot more, the documentation will get updated soon.
