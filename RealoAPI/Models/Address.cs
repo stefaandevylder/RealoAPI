@@ -1,4 +1,7 @@
-﻿namespace RealoAPI.Models {
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace RealoAPI.Models {
 
     public class Address {
 
@@ -10,11 +13,13 @@
         /// <summary>
         /// Address precision.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public AdressType Type { get; private set; }
 
         /// <summary>
         /// Country ISO 3166-2 code.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public Country CountryISO { get; set; }
 
         /// <summary>
@@ -70,6 +75,7 @@
         /// <summary>
         /// The accurracy of the coordinate.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public AdressType? CoordinatesAccuracy { get; set; }
 
         /// <summary>

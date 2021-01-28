@@ -1,10 +1,14 @@
-﻿namespace RealoAPI.Models {
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace RealoAPI.Models {
 
     public class VirtualTour {
 
         /// <summary>
         /// Virtual tour provider.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public VirtualTourProvider? Provider { get; set; }
 
         /// <summary>

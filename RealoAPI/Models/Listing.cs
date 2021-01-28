@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 
 namespace RealoAPI.Models {
@@ -13,26 +15,31 @@ namespace RealoAPI.Models {
         /// <summary>
         /// Property type.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public ListingType Type { get; set; }
 
         /// <summary>
         /// Secondary Type.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public EstateSecundairyType? SecundairyType { get; set; }
 
         /// <summary>
         /// State of the building.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public BuildingCondition? BuildingCondition { get; set; }
 
         /// <summary>
         /// Listing type.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public ListingWay Way { get; set; }
 
         /// <summary>
         /// Listing status.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public ListingStatus? Status { get; set; }
 
         /// <summary>
@@ -43,27 +50,30 @@ namespace RealoAPI.Models {
         /// <summary>
         /// Start date and time of the listing.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime? ListedAt { get; set; }
 
         /// <summary>
         /// Modification date and time of the listing.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
         /// Availability date of the listing.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime? AvailableAt { get; set; }
 
         /// <summary>
-        /// An list of descriptions by language code.
+        /// A list of descriptions by language code.
         /// </summary>
-        public IDictionary<Language, string> Description { get; set; }
+        public IDictionary<string, string> Description { get; set; }
 
         /// <summary>
-        /// An list of titles by language code.
+        /// A list of titles by language code.
         /// </summary>
-        public IDictionary<Language, string> Title { get; set; }
+        public IDictionary<string, string> Title { get; set; }
 
         /// <summary>
         /// Property agency.
@@ -88,6 +98,7 @@ namespace RealoAPI.Models {
         /// <summary>
         /// Currency of the price.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public Currency? Currency { get; set; }
 
         /// <summary>
@@ -179,6 +190,7 @@ namespace RealoAPI.Models {
         /// European classification for energy performance.
         /// See https://en.wikipedia.org/wiki/Energy_Performance_Certificate.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public EnergyClassification? EnergyClassification { get; set; }
 
         /// <summary>
@@ -194,31 +206,37 @@ namespace RealoAPI.Models {
         /// <summary>
         /// Estate detachment type.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public EstateDetachment? Detachment { get; set; }
 
         /// <summary>
         /// Primary heating type.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public EstateHeatingType? HeatingType { get; set; }
 
         /// <summary>
         /// Orientation of the garden.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public Orientation? GardenOrientation { get; set; }
 
         /// <summary>
         /// Electricity inspection report type.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public ElectricityInspectionReportType? ElectricityInspectionReportType { get; set; }
 
         /// <summary>
         /// Indicates if the estate is in a flood prone location.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public EstateFloodProneLocation FloodProneLocation { get; set; }
 
         /// <summary>
         /// Indicates if the estate is in a delineated area.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public EstateDelineatedArea DelineatedArea { get; set; }
 
         /// <summary>
@@ -239,12 +257,12 @@ namespace RealoAPI.Models {
         /// <summary>
         /// List of Realo urls by language.
         /// </summary>
-        public IDictionary<Language, string> CanonicalUrls { get; private set; }
+        public IDictionary<string, string> CanonicalUrls { get; private set; }
 
         /// <summary>
         /// Original agency website url of the listing or a list of agency urls by language code.
         /// </summary>
-        public IDictionary<Language, string> AgencyUrl { get; set; }
+        public IDictionary<string, string> AgencyUrl { get; set; }
 
         /// <summary>
         /// A reference to the original listing of the agency.
