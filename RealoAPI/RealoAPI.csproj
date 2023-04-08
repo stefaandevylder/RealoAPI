@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Stefaan De Vylder</Authors>
     <Description>An unofficial .NET wrapper for the Realo.be API</Description>
     <RepositoryUrl>https://github.com/stefaandevylder/RealoAPI</RepositoryUrl>
